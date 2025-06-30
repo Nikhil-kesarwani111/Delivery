@@ -1,64 +1,53 @@
-/* Remove this line:
- // Initialize Leaflet map
-*/
+<!doctype html>
+<html>
+  <head>
+    <title>Delivery Route & H3 Zones</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
 
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: sans-serif;
-}
+    <!-- Leaflet CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
 
-#map {
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  width: 100%;
-}
-
-.input-box {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 10px;
-  background: #111;
-  display: flex;
-  gap: 8px;
-  z-index: 999;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-label {
-  color: white;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-select {
-  margin-left: 4px;
-  padding: 4px;
-  border-radius: 4px;
-  border: none;
-}
-
-input {
-  flex: 1;
-  padding: 6px;
-  border-radius: 4px;
-  border: none;
-}
-
-button {
-  padding: 6px 12px;
-  background: #1db954;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 4px;
-}
-
-button:hover {
-  background: #1ed760;
-}
+    <!-- H3‑JS -->
+    <script src="https://unpkg.com/h3-js@4.1.0/dist/h3-js.umd.js"></script>
+  </head>
+  <body>
+    <div class="input-box">
+      <input type="text" id="start" placeholder="Pickup address..." />
+      <input type="text" id="end" placeholder="Drop address..." />
+      <button onclick="getRoute()">Get Route</button>
+      <button onclick="drawHexGrid(7, false)">Show Grid</button>
+      <button onclick="drawHexGrid(7, true)">Heatmap</button>
+      <button onclick="gridLayer.clearLayers()">Clear Grid</button>
+      <label
+        >Resolution:
+        <select id="resSelect" onchange="updateResolution()">
+          <option value="6">6 (Large)</option>
+          <option value="7" selected>7 (Medium)</option>
+          <option value="8">8 (Small)</option>
+        </select></label
+      >
+      <label
+        >View:
+        <select id="viewSelect" onchange="changeMapView()">
+          <option value="street" selected>Street</option>
+          <option value="satellite">Satellite</option>
+          <option value="terrain">Terrain</option>
+          <option value="dark">Dark</option>
+          <option value="watercolor">Watercolor</option>
+        </select></label
+      >
+      <button onclick="clearAll()">Clear All</button>
+    </div>
+    <div id="map"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
